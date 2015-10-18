@@ -1,13 +1,4 @@
-'''
-Created on Aug 12, 2015
 
-@author: sadhna01
-'''
-'''
-Created on Aug 12, 2015
-
-@author: sahil.singla01
-'''
 
 class Flight:
     def __init__(self):
