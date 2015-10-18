@@ -1,7 +1,5 @@
 '''
 Created on Aug 13, 2015
-
-@author: sadhna01
 '''
 class HotelBooking:
     def __init__(self):
