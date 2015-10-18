@@ -1,0 +1,42 @@
+'''
+'''
+from utility import DBConnectivity
+from classes.flight import Flight
+
+def get_flight(source,destination,time):
+    try:
+        con=DBConnectivity.create_connection()
+        cur=DBConnectivity.create_cursor(con)
+        list_of_flights=[]
+        cur.execute("select * from flight_details where source=:source and destination=:destination and departuretime>=:time",{"source":source,"destination":destination,"time":time})
+        for flightid,flightname,source,destination,departuretime,arrivaltime,adultfare,childfare in cur:
+            flight=Flight()
+            flight.set_flight_id(flightid)
+            flight.set_flight_name(flightname)
+            flight.set_departure_time(departuretime)
+            flight.set_adult_fare(adultfare)
+            flight.set_child_fare(childfare)
+            flight.set_arrival_time(arrivaltime)
+            flight.set_destination(destination)
+            flight.set_source(source)
+            
+            dephr=int(departuretime[0:2])
+            depmin=int(departuretime[3:])
+            arrhr=int(arrivaltime[0:2])
+            arrmin=int(arrivaltime[3:])
+            
+            duration=(arrhr*60+arrmin)-(dephr*60+depmin)
+            
+            durhr=int(duration/60)
+            durmin=duration%60
+            if(int(durmin)!=0):
+                duration1=str(durhr)+"hrs "+str(durmin)+"mins"
+            else:
+                duration1=str(durhr)+"hrs " 
+            flight.set_duration(duration1)
+            
+            list_of_flights.append(flight)
+        return list_of_flights
+    finally:
+        cur.close()
+        con.close()    
