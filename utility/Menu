@@ -1,0 +1,42 @@
+'''
+This module displays a menu to the user.
+'''
+from functionality import search_hotel
+print("Welcome to Integrated Travel Services!!")
+print("***************************************")
+
+print("Choose an option from below:\n")
+
+end=False
+
+while(end==False):
+    print("1. Search a Flight")
+    print("2. Book a Flight")
+    print("3. Search a Hotel")
+    print("4. Book a Hotel")
+    print("5. Advanced Flight search")
+    print("6. Exit")
+    option=input()
+    if(option.isdigit() and (int(option)>=1 or int(option)<=6)):
+        if(int(option)==1):
+            print("Let us search a flight")
+           
+        if(int(option)==2):
+            print("Let us book a flight")
+            
+        if(int(option)==3):
+            print("Let us search a hotel")
+            search_hotel.search_hotel()
+            
+        if(int(option)==4):
+            print("Let us book a hotel")
+            
+        if(int(option)==5):
+            print("Advanced Search")
+            
+        if(int(option)==6):
+            print("Thank you!")
+            end=True
+    else:
+        print("Please enter a valid option ( 1,2,3,4,5,6 )")
+    
