@@ -1,0 +1,110 @@
+drop table hotel_booking;
+drop table hotel;
+drop table flight_booking;
+drop table flight_details;
+
+
+
+
+
+
+
+
+create table flight_details(
+flightid varchar2(10),
+flightname varchar2(30) constraint name_not_null not null,
+source varchar2(30) constraint source_not_null not null,
+destination varchar2(30) constraint dest_not_null not null,
+departuretime varchar2(5), 
+arrivaltime varchar2(5),
+adultfare number(6,2) constraint afare_not_null not null,
+childfare number(6,2) constraint cfare_not_null not null,
+constraint flight_unique primary key(flightid),
+CONSTRAINT CHECK_FARE CHECK(ADULTFARE<>CHILDFARE));
+
+
+INSERT into flight_details values('SP101','Spice Jet','Delhi','Bangalore','09:00','12:00',6000,3000);
+
+insert into flight_details values('AI101','AirIndia','Delhi','Mumbai','10:00','12:00',4000,2000);
+
+insert into flight_details values('IN101','Indigo','Delhi','Bhopal','08:00','09:30',5000,2500);
+
+insert into flight_details values('AI102','Air India','Mumbai','Bangalore','13:00','14:00',3000,1500);
+
+insert into flight_details values('SP102','Spice Jet','Bhopal','Mumbai','11:00','12:00',4000,2000);
+
+insert into flight_details values('IN102','Indigo','Delhi','Lucknow','07:00','08:00',3000,1500);
+
+insert into flight_details values('AA101','Air Asia','Lucknow','Bhopal','09:00','10:00',4000,2000);
+
+insert into flight_details values('AA102','Air Asia','Chandigarh','Kolkata','08:00','10:00',6000,3000);
+
+insert into flight_details values('SP103','Spice Jet','Lucknow','Kolkata','19:00','21:00',4000,2000);
+
+insert into flight_details values('AI103','Air India','Chandigarh','Lucknow','17:00','18:00',5000,2500);
+INSERT INTO FLIGHT_DETAILS VALUES('SP104','Spice Jet','Delhi','Bangalore','09:00','11:00',6000,3000);
+
+INSERT INTO FLIGHT_DETAILS VALUES('SP111','Spice Jet','Bhopal','Bangalore','21:00','23:00',6000,3000);
+
+
+
+
+create table flight_booking(
+bookingid varchar2(10),
+flightid varchar2(10),
+totalfare number(10,2) constraint fare_not_null not null,
+primarypassenger varchar2(30)constraint pname_not_null not null,
+no_of_children number constraint check_children check(no_of_children between 0 and 4),
+no_of_adults number constraint check_adults check(no_of_adults between 1 and 4),
+dateoftravel VARCHAR2(20) not null,
+constraint bookingid_unique primary key(bookingid),
+constraint flightid_fk foreign key(flightid) references flight_details(flightid));
+
+
+
+
+
+
+create table hotel(
+        hotelid varchar2(20) CONSTRAINT hotelid__pk PRIMARY KEY,
+		hotelname varchar2(20) CONSTRAINT hotelname__nn NOT NULL,
+		location varchar2(20) CONSTRAINT location__nn NOT NULL,
+		efare number(10,2) CONSTRAINT efare__nn NOT NULL,
+		dfare number(10,2) CONSTRAINT dfare__nn NOT NULL
+		);
+
+
+
+
+INSERT  into hotel(hotelid,hotelname,location,efare,dfare) values('H001','Taj','Bangalore',5000,3000);
+INSERT  into hotel(hotelid,hotelname,location,efare,dfare) values('H002','Le Meridean','Mumbai',4000,3000);
+INSERT  into hotel(hotelid,hotelname,location,efare,dfare) values('H003','Sher Bagh','Bhopal',4000,2500);
+INSERT  into hotel(hotelid,hotelname,location,efare,dfare) values('H004','Lalit','Lucknow',4500,2500);
+INSERT  into hotel(hotelid,hotelname,location,efare,dfare) values('H005','Fair Mont','Kolkata',5000,3500);
+INSERT  into hotel(hotelid,hotelname,location,efare,dfare) values('H006','Oberoi','Chandigarh',4500,3000);
+INSERT  into hotel(hotelid,hotelname,location,efare,dfare) values('H007','Vivanta','Bangalore',6000,4000);
+INSERT  into hotel(hotelid,hotelname,location,efare,dfare) values('H008','The Leela','Mumbai',5000,4000);
+INSERT  into hotel(hotelid,hotelname,location,efare,dfare) values('H009','Radisson','Lucknow',3000,2000);
+INSERT  into hotel(hotelid,hotelname,location,efare,dfare) values('H010','Empolio','Kolkata',4000,2500);
+INSERT  into hotel(hotelid,hotelname,location,efare,dfare) values('H011','Hayat','Bangalore',5600,3999);
+INSERT  into hotel(hotelid,hotelname,location,efare,dfare) values('H012','Le Meridean','Bangalore',4900,3000);
+INSERT  into hotel(hotelid,hotelname,location,efare,dfare) values('H013','Sher Bagh','Mumbai',4000,2500);
+INSERT  into hotel(hotelid,hotelname,location,efare,dfare) values('H014','Lalit','Mumbai',4500,2500);
+
+
+
+
+create table hotel_booking(
+hotel_bookingid varchar2(10),
+hotelid VARCHAR2(20),
+flightbookingid varchar2(10),
+stay_duration integer constraint check_duration check(stay_duration>0),
+totalfare number constraint tfare_not_null not null,
+no_of_children integer constraint check_children1 check(no_of_children between 0 and 4),
+no_of_adults integer constraint check_adults1 check(no_of_adults between 1 and 4),
+EXECUTIVEROOM NUMBER,
+DELUXEROOM NUMBER,
+booked_under varchar2(30),
+constraint booking_unique primary key(hotel_bookingid),
+constraint hotelid_fk foreign key(hotelid) references hotel(hotelid),
+constraint flightid_fk1 foreign key(flightbookingid) references flight_booking(bookingid)); 
