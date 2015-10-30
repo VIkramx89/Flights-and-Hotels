@@ -1,5 +1,4 @@
-'''
-'''
+
 from utility import DBConnectivity
 from exceptions.CustomExceptions import InvalidFlightBookingIdException
 from exceptions.CustomExceptions import InvalidHotelBookingIdException
