@@ -1,0 +1,75 @@
+from validations.hotel_validation import validate_booked_flight
+from validations.hotel_validation import validate_location
+from validations.hotel_validation import validate_no_of_rooms
+from validations.hotel_validation import vadidate_adult_exRooms
+from exceptions.CustomExceptions import InvalidBookedFlightException
+from exceptions.CustomExceptions import InvalidHotelLocationException
+from exceptions.CustomExceptions import InvalidNoOfRoomsException
+from exceptions.CustomExceptions import InvalidAdultExecutiveRoomsException
+
+'''
+positive test cases
+'''
+#fbookid = 7002
+#list_of_flights=validate_booked_flight(fbookid)
+#if len(list_of_flights) != 0:
+#    print('The booking id exists')
+
+#location = 'Mumbai'
+#list_of_hotels = validate_location(location)
+print('positive test cases:')
+drooms = 2
+erooms = 4
+children = 2
+adult = 4
+c = validate_no_of_rooms(drooms,erooms,children,adult)
+if(c):
+    print('valid no of rooms')
+
+d = vadidate_adult_exRooms(adult,erooms)
+if d:
+    print('Valid adult vs executive rooms')
+    
+list_of_hotels = validate_location('Mumbai')
+if(len(list_of_hotels)!= None):
+    print('The hotel location is valid')
+    
+
+print('************************')
+print('negative test cases:')
+'''
+negative test cases
+'''
+try:
+    list_of_flights=validate_booked_flight('B03')
+except InvalidBookedFlightException as e:
+    print(e)
+    
+try:
+    list_of_hotels = validate_location('laddakh')
+except InvalidHotelLocationException as e:
+    print(e)
+try:
+    drooms = 2
+    erooms = 4
+    children =3
+    adult = 4
+    f = validate_no_of_rooms(drooms,erooms,children,adult)
+    if(not f):
+        raise InvalidNoOfRoomsException()
+except InvalidNoOfRoomsException as e1:
+    print(e1)
+
+try:
+    adult = 1
+    erooms = 3
+    g = vadidate_adult_exRooms(adult,erooms)
+    if(not g):
+        raise InvalidAdultExecutiveRoomsException()
+except InvalidAdultExecutiveRoomsException as e:
+    print(e)
+
+        
+    
+    
+    
