@@ -1,7 +1,7 @@
 '''
 Created on Aug 14, 2015
 
-@author: sadhna01
+@author: vkmguy
 '''
 from utility import DBConnectivity
 from classes.hotel_detail import Hotel
